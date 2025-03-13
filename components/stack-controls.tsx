@@ -14,7 +14,6 @@ interface StackControlsProps {
   onMoveUp: () => void;
   onMoveDown: () => void;
   onDelete: () => void;
-  onAdd: () => void;
   onEdit: () => void;
 }
 
@@ -23,7 +22,6 @@ export function StackControls({
   onMoveUp,
   onMoveDown,
   onDelete,
-  onAdd,
   onEdit,
 }: StackControlsProps) {
   return (
@@ -100,23 +98,6 @@ export function StackControls({
             </TooltipTrigger>
             <TooltipContent>
               <p>{hasSelectedItem ? "Edit Selected" : "Add New"}</p>
-            </TooltipContent>
-          </Tooltip>
-
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={onAdd}
-                className="text-zinc-400 hover:text-emerald-400 hover:bg-zinc-800"
-              >
-                <Plus className="h-4 w-4" />
-                <span className="sr-only">Add</span>
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Add New</p>
             </TooltipContent>
           </Tooltip>
         </div>

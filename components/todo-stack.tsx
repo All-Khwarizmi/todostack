@@ -68,7 +68,6 @@ export default function TodoStack() {
           onMoveUp={moveItemUp}
           onMoveDown={moveItemDown}
           onDelete={deleteSelectedItem}
-          onAdd={handleAddNew}
           onEdit={handleEditSelected}
         />
         <SettingsPanel settings={settings} onUpdateSettings={updateSettings} />
