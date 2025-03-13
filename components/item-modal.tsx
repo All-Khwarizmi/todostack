@@ -126,7 +126,7 @@ export function ItemModal({
                 variant="outline"
                 size="icon"
                 onClick={addLink}
-                className="shrink-0"
+                className="shrink-0 text-black hover:bg-zinc-200"
               >
                 <Plus className="h-4 w-4" />
                 <span className="sr-only">Add Link</span>
@@ -167,7 +167,7 @@ export function ItemModal({
           <Button
             variant="outline"
             onClick={onClose}
-            className="border-zinc-700"
+            className="border-zinc-700 text-black hover:bg-zinc-200"
           >
             Cancel
           </Button>
