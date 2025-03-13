@@ -1,13 +1,13 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { Plus, Trash2 } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Label } from "@/components/ui/label"
-import type { StackItem } from "@/types/stack"
-import { formatDistanceToNow } from "date-fns"
+import { useState, useEffect } from "react";
+import { Plus, Trash2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import type { StackItem } from "@/types/stack";
+import { formatDistanceToNow } from "date-fns";
 import {
   Dialog,
   DialogContent,
@@ -15,62 +15,69 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog"
+} from "@/components/ui/dialog";
 
 interface ItemModalProps {
-  isOpen: boolean
-  onClose: () => void
-  item: StackItem | null
-  maxTimeInStack: number
-  onSave: (item: Omit<StackItem, "id" | "createdAt" | "selected">) => void
-  isNew?: boolean
+  isOpen: boolean;
+  onClose: () => void;
+  item?: StackItem | null;
+  maxTimeInStack: number;
+  onSave: (item: Omit<StackItem, "id" | "createdAt" | "selected">) => void;
+  isNew?: boolean;
 }
 
-export function ItemModal({ isOpen, onClose, item, maxTimeInStack, onSave, isNew = false }: ItemModalProps) {
-  const [title, setTitle] = useState("")
-  const [description, setDescription] = useState("")
-  const [links, setLinks] = useState<string[]>([])
-  const [newLink, setNewLink] = useState("")
+export function ItemModal({
+  isOpen,
+  onClose,
+  item,
+  maxTimeInStack,
+  onSave,
+  isNew = false,
+}: ItemModalProps) {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [links, setLinks] = useState<string[]>([]);
+  const [newLink, setNewLink] = useState("");
 
   useEffect(() => {
     if (item) {
-      setTitle(item.title)
-      setDescription(item.description)
-      setLinks(item.links)
+      setTitle(item.title);
+      setDescription(item.description);
+      setLinks(item.links);
     } else {
-      setTitle("")
-      setDescription("")
-      setLinks([])
+      setTitle("");
+      setDescription("");
+      setLinks([]);
     }
-    setNewLink("")
-  }, [item])
+    setNewLink("");
+  }, [item]);
 
   const handleSave = () => {
     onSave({
       title,
       description,
       links,
-    })
-    onClose()
-  }
+    });
+    onClose();
+  };
 
   const addLink = () => {
     if (newLink.trim() && !links.includes(newLink.trim())) {
-      setLinks([...links, newLink.trim()])
-      setNewLink("")
+      setLinks([...links, newLink.trim()]);
+      setNewLink("");
     }
-  }
+  };
 
   const removeLink = (index: number) => {
-    setLinks(links.filter((_, i) => i !== index))
-  }
+    setLinks(links.filter((_, i) => i !== index));
+  };
 
-  const timeLeft = item ? item.createdAt + maxTimeInStack - Date.now() : 0
+  const timeLeft = item ? item.createdAt + maxTimeInStack - Date.now() : 0;
   const formattedTimeLeft = item
     ? formatDistanceToNow(new Date(item.createdAt + maxTimeInStack), {
         addSuffix: true,
       })
-    : ""
+    : "";
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
@@ -78,7 +85,9 @@ export function ItemModal({ isOpen, onClose, item, maxTimeInStack, onSave, isNew
         <DialogHeader>
           <DialogTitle>{isNew ? "Add New Task" : "View Task"}</DialogTitle>
           <DialogDescription className="text-zinc-400">
-            {isNew ? "Add a new task to your stack" : `This task will expire ${formattedTimeLeft}`}
+            {isNew
+              ? "Add a new task to your stack"
+              : `This task will expire ${formattedTimeLeft}`}
           </DialogDescription>
         </DialogHeader>
         <div className="space-y-4 py-4">
@@ -112,7 +121,13 @@ export function ItemModal({ isOpen, onClose, item, maxTimeInStack, onSave, isNew
                 className="bg-zinc-900 border-zinc-800"
                 onKeyDown={(e) => e.key === "Enter" && addLink()}
               />
-              <Button type="button" variant="outline" size="icon" onClick={addLink} className="shrink-0">
+              <Button
+                type="button"
+                variant="outline"
+                size="icon"
+                onClick={addLink}
+                className="shrink-0"
+              >
                 <Plus className="h-4 w-4" />
                 <span className="sr-only">Add Link</span>
               </Button>
@@ -120,7 +135,10 @@ export function ItemModal({ isOpen, onClose, item, maxTimeInStack, onSave, isNew
             {links.length > 0 && (
               <ul className="mt-2 space-y-2">
                 {links.map((link, index) => (
-                  <li key={index} className="flex items-center justify-between bg-zinc-900 p-2 rounded-md">
+                  <li
+                    key={index}
+                    className="flex items-center justify-between bg-zinc-900 p-2 rounded-md"
+                  >
                     <a
                       href={link.startsWith("http") ? link : `https://${link}`}
                       target="_blank"
@@ -146,15 +164,21 @@ export function ItemModal({ isOpen, onClose, item, maxTimeInStack, onSave, isNew
           </div>
         </div>
         <DialogFooter>
-          <Button variant="outline" onClick={onClose} className="border-zinc-700">
+          <Button
+            variant="outline"
+            onClick={onClose}
+            className="border-zinc-700"
+          >
             Cancel
           </Button>
-          <Button onClick={handleSave} className="bg-emerald-600 hover:bg-emerald-700">
+          <Button
+            onClick={handleSave}
+            className="bg-emerald-600 hover:bg-emerald-700"
+          >
             {isNew ? "Add to Stack" : "Save Changes"}
           </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
-  )
+  );
 }
-
