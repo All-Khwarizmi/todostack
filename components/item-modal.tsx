@@ -137,16 +137,21 @@ export function ItemModal({
                 {links.map((link, index) => (
                   <li
                     key={index}
-                    className="flex items-center justify-between bg-zinc-900 p-2 rounded-md"
+                    className="grid grid-cols-[1fr_auto] bg-zinc-900 p-2 rounded-md gap-2 w-full"
                   >
-                    <a
-                      href={link.startsWith("http") ? link : `https://${link}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-emerald-400 text-sm truncate hover:underline"
-                    >
-                      {link}
-                    </a>
+                    <div className="overflow-hidden">
+                      <a
+                        href={
+                          link.startsWith("http") ? link : `https://${link}`
+                        }
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-emerald-400 text-sm hover:underline block whitespace-nowrap overflow-hidden text-ellipsis"
+                        title={link}
+                      >
+                        {link}
+                      </a>
+                    </div>
                     <Button
                       type="button"
                       variant="ghost"
